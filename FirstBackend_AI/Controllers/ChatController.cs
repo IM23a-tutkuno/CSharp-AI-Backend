@@ -89,10 +89,19 @@ using System.IdentityModel.Tokens.Jwt;
             };
 
 
-            var response = await SendMessage(anthropic, chatList);
-                
+            var send_response = await SendMessage(anthropic, chatList);
+
+
+            Answer response = new Answer
+            {
+                success = true,
+                response = send_response.Content[0].Text,
+                token = chatList.Token
+            };
+
 
             return Ok(response);
+            
             }
         }
     }

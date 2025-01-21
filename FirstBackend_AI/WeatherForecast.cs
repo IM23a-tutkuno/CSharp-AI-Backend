@@ -33,8 +33,9 @@ namespace FirstBackend_AI
 
     public class Answer
     {
-        public string Response { get; set; }
-        public string Message { get; set; }
+        public bool success { get; set; }
+        public string response { get; set; }
+        public string token { get; set; }
     }
 
     public class LoginToken
