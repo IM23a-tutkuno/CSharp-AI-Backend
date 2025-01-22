@@ -1,7 +1,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Claudia;
     using DotNetEnv;
-using System.IdentityModel.Tokens.Jwt;
+    using System.IdentityModel.Tokens.Jwt;
 
     namespace FirstBackend_AI.Controllers
     {
@@ -14,6 +14,12 @@ using System.IdentityModel.Tokens.Jwt;
         [Route("api/login")]
         public class LoginController : ControllerBase
         {
+
+
+        public static void Login()
+        {
+
+        }
 
 
 
