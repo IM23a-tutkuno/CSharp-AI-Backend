@@ -13,8 +13,8 @@ namespace FirstBackend_AI
 
     public class Login
     {
-        public string Username { get; set; }
-        public string Passwort { get; set; }
+        public string passwort_input { get; set; }
+        public string username_input { get; set; }
 
     }
 
@@ -45,4 +45,42 @@ namespace FirstBackend_AI
         public string ApiKey { get; set; }
         public string Ai_name { get; set; }
     }
+
+    public class UserInfo
+    {
+        public string Username { get; set; }
+
+        public string Passwort { get; set; }
+
+        public string Api_Key { get; set; }
+
+        public string AI_name { get; set; }
+    }
+
+
+    public class UserJSON
+    {
+        public string Content { get; set; }
+    }
+
+
+    public class SupabaseConfig
+    {
+        public string Key { get; set; } = string.Empty;
+        public string URL { get; set; } = string.Empty;
+    }
+
+    public class LoginResponse
+    {
+        public bool Success { get; set; }
+
+        public string Message { get; set; }
+
+        public bool Result { get; set; }
+
+        public bool Token { get; set; }
+
+        public string apiKey { get; set; }
+    }
+
 }

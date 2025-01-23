@@ -7,6 +7,8 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;              
 using System.Text;
+using System;
+using FirstBackend_AI;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +31,8 @@ Env.Load();
 
 
 
+builder.Configuration.AddEnvironmentVariables();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -39,10 +43,23 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
+var url = System.Environment.GetEnvironmentVariable("SUPABASE_URL");
+var key = System.Environment.GetEnvironmentVariable("SUPABASE_KEY");
+
+
+
+
+
+
+
+builder.Services.Configure<SupabaseConfig>(builder.Configuration.GetSection("Supabase"));
+
 var app = builder.Build();
 
 
-app.MapGet("/", () => "Hello World");
+app.MapGet("/", () => "Supabase is initialised and runnning successfully");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -62,3 +79,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+

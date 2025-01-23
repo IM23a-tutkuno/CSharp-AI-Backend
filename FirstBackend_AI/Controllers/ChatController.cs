@@ -99,6 +99,8 @@ using System.IdentityModel.Tokens.Jwt;
                 token = chatList.Token
             };
 
+            Console.WriteLine("fsfadf"); 
+
 
             return Ok(response);
             

@@ -3,7 +3,7 @@
     namespace FirstBackend_AI.Controllers
     {
         [ApiController]
-        [Route("api/login")]
+        [Route("api/Test")]
         public class FirstController : ControllerBase
         {
 
@@ -21,8 +21,8 @@
                 {
                     new Login
                     {
-                        Username = username,
-                        Passwort = passwort
+                        username_input = username,
+                        passwort_input = passwort
                         
                     }
 
