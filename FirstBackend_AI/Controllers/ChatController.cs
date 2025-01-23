@@ -48,15 +48,17 @@ using System.IdentityModel.Tokens.Jwt;
             // Convert the List<Claudia.Message> to Claudia.Message[]
             Claudia.Message[] messageArray = anthropicMessages.ToArray();
 
+                var send_message = await anthropic.Messages.CreateAsync(new MessageRequest
+                {
+                    Model = "claude-3-5-sonnet-20240620", // you can use Claudia.Models.Claude3_5Sonnet string constant
+                    MaxTokens = 1024,
+                    Messages = messageArray
+                });
 
-            var send_message = await anthropic.Messages.CreateAsync(new MessageRequest
-            {
-                Model = "claude-3-5-sonnet-20240620", // you can use Claudia.Models.Claude3_5Sonnet string constant
-                MaxTokens = 1024,
-                Messages = messageArray
-            });
 
-            return send_message;
+
+
+            
 
 
 

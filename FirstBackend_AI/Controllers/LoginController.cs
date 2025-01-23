@@ -4,8 +4,11 @@
     using System.IdentityModel.Tokens.Jwt;
     using Supabase;
     using System.Text.Json;
-using Microsoft.Extensions.Configuration;
-using Supabase.Interfaces;
+    using Microsoft.Extensions.Configuration;
+    using Supabase.Interfaces;
+    using System.Security.Claims;
+    using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
     namespace FirstBackend_AI.Controllers
     {
@@ -31,6 +34,36 @@ using Supabase.Interfaces;
 
         }
 
+        private string CreateJwtToken(UserInfo userInfo)
+        {
+
+
+
+            var _secretKey = _configuration["secret_key"];
+
+            var claims = new[]
+            {
+                new Claim("username", userInfo.Username),
+                new Claim("passwort", userInfo.Passwort),
+                new Claim("apiKey", userInfo.Api_Key),
+                new Claim("ai_name", userInfo.AI_name)
+
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: "CSharpBackend",
+                audience: "web-client",
+                claims: claims,
+                expires: DateTime.Now.AddHours(5),
+                signingCredentials: creds
+            );
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            return tokenHandler.WriteToken(token);
+        }
 
         private async Task<string> Check_Credentials(string username, string password)
         {
@@ -104,7 +137,7 @@ using Supabase.Interfaces;
 
 
         [HttpPost(Name = "Login")]
-            public async Task<string> Post([FromBody] Login login)
+            public async Task<LoginResponse> Post([FromBody] Login login)
             {
 
             string username = login.username_input;
@@ -118,21 +151,41 @@ using Supabase.Interfaces;
             string check_cred = await Check_Credentials(username, password);
 
 
-            if (check_cred  == "true")
+            if (check_cred == "true")
             {
                 UserInfo user = await Get_User(username, password);
-                return user.Username;
-
+                var token = CreateJwtToken(user);
+                LoginResponse response = new LoginResponse
+                {
+                    success = true,
+                    message = "Logged in successfully!",
+                    result = true,
+                    token = token,
+                    apiKey = user.Api_Key
+                };
+                return response;
             }
 
 
+            else
+            {
+                LoginResponse response_not_successful = new LoginResponse
+                {
+                    success = false,
+                    message = "Username or password wrong!",
+                    result = false,
+                };
+                return response_not_successful;
+            }
+
+            
 
 
 
 
 
 
-            return "fdfsd";
+
             }
         }
     }

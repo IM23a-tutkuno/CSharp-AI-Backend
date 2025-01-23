@@ -72,13 +72,13 @@ namespace FirstBackend_AI
 
     public class LoginResponse
     {
-        public bool Success { get; set; }
+        public bool success { get; set; }
 
-        public string Message { get; set; }
+        public string message { get; set; }
 
-        public bool Result { get; set; }
+        public bool result { get; set; }
 
-        public bool Token { get; set; }
+        public string token { get; set; }
 
         public string apiKey { get; set; }
     }
